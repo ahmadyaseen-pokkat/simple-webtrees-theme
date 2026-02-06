@@ -1,6 +1,10 @@
 # EasyTree
 
-EasyTree is a custom webtrees theme built by modifying the excellent [JustLight theme](https://github.com/JustCarmen/webtrees-theme-justlight) with assistance from Gemini and Claude AI. Huge thanks to [JustCarmen](https://github.com/JustCarmen) for creating the foundation that made this project possible.
+![Development Status](https://img.shields.io/badge/status-in%20development-yellow)
+
+EasyTree is a streamlined webtrees theme focused on simplicity for beginners. Built by modifying the excellent [JustLight theme](https://github.com/JustCarmen/webtrees-theme-justlight) with assistance from Gemini and Claude AI, the main goal is to cut down extra features that beginners find confusing and provide a user-friendly editor.
+
+Huge thanks to [JustCarmen](https://github.com/JustCarmen) for creating the foundation that made this project possible.
 
 ## About the Name
 
