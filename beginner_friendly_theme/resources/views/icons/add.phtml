@@ -1,0 +1,16 @@
+<?php
+
+/* Prevent conflicts with webtrees icons in the control panel */
+
+use Psr\Http\Message\ServerRequestInterface;
+use Fisharebest\Webtrees\Registry;
+
+$route = Registry::container()->get(ServerRequestInterface::class)->getAttribute('route');
+
+?>
+
+<?php if ($route->pathPrefix === '/admin' || basename($route->name) === 'TreePrivacyPage'): ?>
+    <?= view('::icons/add') ?>
+<?php else: ?>
+    <span class="wt-icon-add"><i class="fa-solid fa-square-plus fa-fw" aria-hidden="true"></i></span>
+<?php endif ?>

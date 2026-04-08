@@ -1,0 +1,155 @@
+@import url("/modules_v4/beginner_friendly_theme/resources/css/justlight.min.css");
+@import url("/modules_v4/beginner_friendly_theme/resources/css/justblack.min.css");
+
+/* Hide all chart menu items EXCEPT: Interactive tree, Pedigree, Family book, and Descendants chart */
+
+/* KEEP these (do not hide):
+   - menu-chart-tree (Interactive tree)
+   - menu-chart-pedigree (Pedigree)
+   - menu-chart-familybook (Family book)
+   - menu-chart-descendants (Descendants chart) - JavaScript will hide only the core "Descendants"
+*/
+
+/* HIDE these charts from the dropdown menu */
+.dropdown-menu a.menu-chart-ancestry {
+  display: none !important;
+}
+
+.dropdown-menu a.menu-chart-compact {
+  display: none !important;
+}
+
+.dropdown-menu a.menu-chart-fanchart {
+  display: none !important;
+}
+
+.dropdown-menu a.menu-chart-hourglass {
+  display: none !important;
+}
+
+.dropdown-menu a.menu-chart-lifespan {
+  display: none !important;
+}
+
+.dropdown-menu a.menu-chart-pedigreemap {
+  display: none !important;
+}
+
+.dropdown-menu a.menu-chart-relationship {
+  display: none !important;
+}
+
+.dropdown-menu a.menu-chart-statistics {
+  display: none !important;
+}
+
+.dropdown-menu a.menu-chart-timeline {
+  display: none !important;
+}
+
+
+/* ===== HIDE ENTIRE DROPDOWN MENUS ===== */
+
+
+/* Hide Calendar dropdown menu */
+.nav-item.dropdown:has(> a[href*="calendar"]) {
+  display: none !important;
+}
+
+/* Hide Reports dropdown menu */
+.nav-item.dropdown:has(> a[href*="report"]) {
+  display: none !important;
+}
+
+/* Alternative approach - hide by menu text content (fallback) */
+li.nav-item.dropdown a.nav-link:contains("Lists"),
+li.nav-item.dropdown a.nav-link:contains("Calendar"),
+li.nav-item.dropdown a.nav-link:contains("Reports") {
+  display: none !important;
+}
+
+
+/* Hide Clippings cart menu */
+.nav-item.dropdown a.menu-clippings,
+li.nav-item.dropdown:has(> a.menu-clippings) {
+  display: none !important;
+}
+
+
+
+/* ===== HIDE UNNECESSARY LIST ITEMS ===== */
+/* Keep only: Individual list, Family list, and Branches */
+
+/* Hide these list items */
+.dropdown-menu a.menu-list-loc,
+.dropdown-menu a.menu-list-obje,
+.dropdown-menu a.menu-list-note,
+.dropdown-menu a.menu-list-plac,
+.dropdown-menu a.menu-list-repo,
+.dropdown-menu a.menu-list-sour,
+.dropdown-menu a.menu-list-subm,
+.dropdown-menu a.menu-list-extended-import-export {
+  display: none !important;
+}
+
+
+
+
+/* ===== HIDE RESEARCH LINKS FROM INDIVIDUAL PAGE ===== */
+
+/* Hide Research Tasks (core module - "todo") - hide entire accordion item */
+.accordion-item:has(#sidebar-header-todo) {
+  display: none !important;
+}
+
+/* Hide Fancy Research Links (custom module) - hide entire accordion item */
+.accordion-item:has(#sidebar-header-_jc-fancy-research-links_) {
+  display: none !important;
+}
+
+
+
+
+
+/* Direct hiding of Fancy Research Links accordion header and content */
+#sidebar-header-_jc-fancy-research-links_,
+#sidebar-content-_jc-fancy-research-links_ {
+  display: none !important;
+}
+
+
+/* ===== HIDE TECHNICAL IDENTIFIERS FROM INDIVIDUAL PAGE ===== */
+
+/* Hide Unique identifier (_UID) */
+.wt-fact-_UID,
+tr[id*="_UID"],
+div:has(> span.label:contains("Unique identifier")) {
+  display: none !important;
+}
+
+/* Hide Record ID number (REFN) */
+.wt-fact-REFN,
+tr[id*="REFN"],
+div:has(> span.label:contains("Record ID number")) {
+  display: none !important;
+}
+
+/* Hide the labels in wt-fact-other-attributes */
+.wt-fact-other-attributes div:has(.label:contains("Unique identifier")),
+.wt-fact-other-attributes div:has(.label:contains("Record ID number")) {
+  display: none !important;
+}
+
+
+/* Hide Extra information sidebar */
+#sidebar-header-extra_info,
+#sidebar-content-extra_info {
+  display: none !important;
+}
+
+
+/* ===== HIDE UNIQUE IDENTIFIER AND RECORD ID NUMBER ===== */
+/* These are hidden via JavaScript in the theme's headContent() method */
+/* because they are rendered dynamically with text labels that CSS cannot target */
+
+

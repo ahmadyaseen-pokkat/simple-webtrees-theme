@@ -1,0 +1,203 @@
+<?php
+
+/**
+ * Replace modules/gedcom_stats/statics.phtml
+ *
+ * Changes
+ * - Transform the global statistics to an inline list
+ *
+ */
+
+use Fisharebest\Webtrees\I18N;
+use Fisharebest\Webtrees\View;
+
+?>
+
+<?php if ($show_last_update) : ?>
+    <p class="card-text">
+        <?= I18N::translate('This family tree was last updated on %s.', '#gedcomUpdated#') ?>
+    </p>
+<?php endif ?>
+
+<?php // START THEME JUSTLIGHT ?>
+<ul class="jc-stats-list list-inline">
+    <?php if ($stat_indi) : ?>
+        <li class="list-inline-item">
+            <?= I18N::translate('Individuals') ?>: #totalIndividuals#
+        </li>
+        <li class="list-inline-item">
+            <?= I18N::translate('Males') ?>: #totalSexMales# (#totalSexMalesPercentage#)
+        </li>
+        <li class="list-inline-item">
+            <?= I18N::translate('Females') ?>: #totalSexFemales# (#totalSexFemalesPercentage#)
+        </li>
+    <?php endif ?>
+
+    <?php if ($stat_surname) : ?>
+        <li class="list-inline-item">
+            <?= I18N::translate('Surnames') ?>: #totalSurnames#
+        </li>
+    <?php endif ?>
+
+    <?php if ($stat_fam) : ?>
+        <li class="list-inline-item">
+            <?= I18N::translate('Families') ?>: #totalFamilies#
+        </li>
+    <?php endif ?>
+
+    <?php if ($stat_sour) : ?>
+        <li class="list-inline-item">
+            <?= I18N::translate('Sources') ?>: #totalSources#
+        </li>
+    <?php endif ?>
+
+    <?php if ($stat_media) : ?>
+        <li class="list-inline-item">
+            <?= I18N::translate('Media objects') ?>: #totalMedia#
+        </li>
+    <?php endif ?>
+
+    <?php if ($stat_repo) : ?>
+        <li class="list-inline-item">
+            <?= I18N::translate('Repositories') ?>: #totalRepositories#
+        </li>
+    <?php endif ?>
+
+    <?php if ($stat_events) : ?>
+        <li class="list-inline-item">
+            <?= I18N::translate('Events') ?>: #totalEvents#
+        </li>
+    <?php endif ?>
+
+    <?php if ($stat_users) : ?>
+        <li class="list-inline-item">
+            <?= I18N::translate('Users') ?>: #totalUsers#
+        </li>
+    <?php endif ?>
+</ul>
+<?php // END THEME JUSTLIGHT ?>
+
+<?php // START THEME JUSTLIGHT ?>
+<table class="table table-sm table-striped jc-stats-table">
+    <caption class="visually-hidden">
+        <?= I18N::translate('Statistics') ?>
+    </caption>
+
+    <tbody>
+        <?php if ($stat_first_birth) : ?>
+            <tr>
+                <th scope="row">
+                    <?= I18N::translate('Earliest birth') ?>
+                </th>
+                <td class="jc-gedcom-stats">
+                    #firstBirth#
+                </td>
+            </tr>
+        <?php endif ?>
+
+        <?php if ($stat_last_birth) : ?>
+            <tr>
+                <th scope="row">
+                    <?= I18N::translate('Latest birth') ?>
+                </th>
+                <td class="jc-gedcom-stats">
+                    #lastBirth#
+                </td>
+            </tr>
+        <?php endif ?>
+
+        <?php if ($stat_first_death) : ?>
+            <tr>
+                <th scope="row">
+                    <?= I18N::translate('Earliest death') ?>
+                </th>
+                <td class="jc-gedcom-stats">
+                    #firstDeath#
+                </td>
+            </tr>
+        <?php endif ?>
+
+        <?php if ($stat_last_death) : ?>
+            <tr>
+                <th scope="row">
+                    <?= I18N::translate('Latest death') ?>
+                </th>
+                <td class="jc-gedcom-stats">
+                    #lastDeath#
+                </td>
+            </tr>
+        <?php endif ?>
+
+        <?php if ($stat_long_life) : ?>
+            <tr>
+                <th scope="row">
+                    <?= I18N::translate('Individual who lived the longest') ?>
+                </th>
+                <td class="jc-gedcom-stats">
+                    #longestLife#
+                </td>
+            </tr>
+        <?php endif ?>
+
+        <?php if ($stat_avg_life) : ?>
+            <tr>
+                <th scope="row">
+                    <?= I18N::translate('Average age at death') ?>
+                </th>
+                <td class="jc-gedcom-stats">
+                    #averageLifespan#
+                    (<?= strtolower(I18N::translate('Males')) ?>: #averageLifespanMale#
+                    <?= strtolower(I18N::translate('Females')) ?>: #averageLifespanFemale#)
+                </td>
+            </tr>
+        <?php endif ?>
+
+        <?php if ($stat_most_chil) : ?>
+            <tr>
+                <th scope="row">
+                    <?= I18N::translate('Family with the most children') ?>
+                </th>
+                    <td class="jc-gedcom-stats">
+                        #largestFamily#(#largestFamilySize# <?= strtolower(I18N::translate('Children')) ?>)
+                    </td>
+                </td>
+            </tr>
+        <?php endif ?>
+
+        <?php if ($stat_avg_chil) : ?>
+            <tr>
+                <th scope="row">
+                    <?= I18N::translate('Average number of children per family') ?>
+                </th>
+                <td class="jc-gedcom-stats">
+                    #averageChildren#
+                </td>
+            </tr>
+        <?php endif ?>
+    </tbody>
+</table>
+<?php // END THEME JUSTLIGHT ?>
+
+<?php if ($surnames !== '') : ?>
+    <div class="clearfix">
+        <p>
+            <strong>
+                <?= I18N::translate('Most common surnames') ?>
+            </strong>
+            <br>
+            <span class="common_surnames">
+                <?= $surnames ?>
+            </span>
+        </p>
+    </div>
+<?php endif ?>
+
+<?php View::push('javascript') ?>
+<script>
+    $('.jc-gedcom-stats')
+        .find('b').addClass('pe-1').end()
+        .find('br').addClass('d-none').end()
+        .find('div').addClass('d-inline-block').end()
+        .find('em').addClass('d-inline-block pe-1');
+</script>
+<?php View::endpush() ?>

@@ -1,0 +1,139 @@
+<?php use Fisharebest\Webtrees\View; ?>
+
+<?php View::push('javascript') ?>
+
+<!-- Source: https://stackoverflow.com/a/62024831 -->
+<script src="https://cdn.jsdelivr.net/npm/js-cookie/dist/js.cookie.min.js"></script>
+<script>
+    // code to set the `color_scheme` cookie
+    var $color_scheme = Cookies.get("JL_COLOR_SCHEME");
+    function get_color_scheme() {
+        return (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
+    }
+    function update_color_scheme() {
+        Cookies.set("JL_COLOR_SCHEME", get_color_scheme());
+    }
+    // read & compare cookie `color-scheme`
+    if ((typeof $color_scheme === "undefined") || (get_color_scheme() != $color_scheme))
+        update_color_scheme();
+    // detect changes and change the cookie
+    if (window.matchMedia)
+        window.matchMedia("(prefers-color-scheme: dark)").addListener( update_color_scheme );
+</script>
+
+<script>
+    // Mobile menus - open one and close the other
+    $(".toggle-primary").on("click", function() {
+        $(".toggle-secondary").attr("aria-expanded", "false")
+        $(".wt-secondary-navigation").removeClass("show")
+    })
+    $(".toggle-secondary").on("click", function() {
+        $(".toggle-primary").attr("aria-expanded", "false")
+        $(".wt-primary-navigation").removeClass("show")
+    })
+
+    // Scroll to target with fixed header
+    function scrollToAnchor(x) {
+        if (x.matches) {
+            var headerHeight = $('.wt-header-wrapper').outerHeight() + 10;
+            $('html').css('scroll-padding-top', headerHeight + 'px');
+        } else {
+            $('html').removeAttr('style');
+        }
+    }
+
+    var x = window.matchMedia("(min-width: 992px)") // Bootstrap @include media-breakpoint-up(lg)
+    scrollToAnchor(x) // Call listener function at run time
+    x.addListener(scrollToAnchor) // Attach listener function on state changes
+
+    // Bootstrap active tab in navbar
+    var url = location.href;
+    $('.wt-primary-navigation').find('a[href="' + url + '"]').addClass('active').parents('li').find('.nav-link').addClass('jc-nav-link-active');
+    $('.wt-secondary-navigation').find('a[href="' + url + '"]').addClass('active');
+
+    // Remove class from caption (this class cannot be overwritten with css)
+    $('caption').removeClass('text-center'); // used in wt-family-navigator-family-heading
+
+    // Descendants chart - add classes for styling purposes
+    $('.wt-chart-descendants [id^="fam"]').each(function () {
+        $(this).addClass('jc-chart-descendants-family'),
+            $(this).find('.wt-chart-box:first').addClass('jc-chart-box-parent')
+            $(this).find('.d-flex:first').find('.wt-chart-horizontal-indent:first').addClass('jc-chart-first-indent')
+    });
+
+    // Ancestors chart - add classes for styling purposes
+    $('.wt-chart-ancestors [id^="fam"]').each(function () {
+        $(this)
+            .find('.d-flex:first')
+            .addClass('mb-2')
+            .next('.d-flex')
+            .find('.wt-chart-horizontal-indent')
+            .addClass('jc-chart-first-indent')
+    });
+
+    // Style the collapsable fact items
+    $('[class^="wt-fact-"] [id^="collapse-"]').addClass('jc-fact-collapse');
+
+    // Restyle gallery caption (Individual / Family page)
+    $('.wt-media-link').addClass('row');
+
+    // Individual page Stories Tab
+    $('.wt-tab-stories .story_title').addClass('h3 text-start').removeClass('text-center');
+
+    // Media list page pagination style
+    $('.wt-route-MediaListModule .wt-page-content > .row.text-center')
+        .removeClass('.text-center')
+        .addClass('my-4')
+        .find('.col:nth-child(1), .col:nth-child(2)').addClass('text-start').end()
+        .find('.col:nth-child(3)').addClass('text-center').end()
+        .find('.col:nth-child(4), .col:nth-child(5)').addClass('text-end');
+
+    // Markdown table style
+    $('.wt-route-NotePage, .wt-route-IndividualPage, .wt-route-FamilyPage, .wt-route-MediaPage')
+        .find('.wt-facts-table table, .wt-fact-main-attributes table').each(function () {
+            $(this).addClass('table table-sm jc-markdown-table');
+            $(this).find('tbody').prepend('<tr><td  class="jc-markdown-table-separator" colspan="' + jQuery(this).find("th").length + '"></tr>');
+        });
+
+    // Forms
+    $('.wt-route-ReportSetupPage').find('.form-control-check').parent('.wt-page-options-value').addClass('py-2 px-3');
+
+    // Solve conflict with our sticky header when using the on screen keyboard.
+    $('form').each(function() {
+        $(this).find('.wt-osk-trigger').on('click', function() {
+            $('.wt-header-wrapper').removeClass('sticky-top');
+        });
+    });
+
+    $('.wt-main-container').each(function() {
+        $(this).find('.wt-osk-keys').on('click', function() {
+            $('.wt-header-wrapper').addClass('sticky-top');
+        });
+    });
+
+    // Badges
+    $('.jc-palette-justlight')
+        .find('.wt-statistics-chart, .wt-block-content-top10_pageviews, .wt-family-members')
+        .find('.badge').addClass('bg-dark bg-gradient').removeClass('rounded-pill bg-secondary')
+
+    $('.jc-palette-justblack')
+        .find('.wt-statistics-chart, .wt-block-content-top10_pageviews, .menu-clippings-cart, .wt-family-members')
+        .find('.badge').addClass('bg-light bg-gradient text-dark').removeClass('rounded-pill bg-secondary');
+
+    $('.menu-clippings-cart, .nav-link').find('.badge').addClass('text-dark');
+
+    // Use the default bootstrap badge class for the odometer
+    $('.jc-palette-justlight').find('.odometer').addClass('badge bg-dark bg-gradient');
+    $('.jc-palette-justblack').find('.odometer').addClass('badge bg-light bg-gradient text-dark');
+
+    // Icons - Use fontawesome. These icons do not have a view to alter
+    $('.icon-indis').addClass('fa-solid fa-user'); // used in user welcome block
+    $('.icon-mypage').addClass('fa-regular fa-user-circle'); // dito
+    $('.icon-selected').addClass('fa-solid fa-check'); // used in the family navigator and the family tab
+
+    // Place the cookie warning after the footer. The cookie warning is part of the privacy-policy footer
+    $('footer').after($('#cookie-warning'));
+    $('#cookie-warning').addClass('jc-cookie-warning');
+
+</script>
+<?php View::endpush() ?>

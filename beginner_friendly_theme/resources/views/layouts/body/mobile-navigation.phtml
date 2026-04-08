@@ -1,0 +1,28 @@
+<?php
+
+use Fisharebest\Webtrees\Module\ModuleThemeInterface;
+use Fisharebest\Webtrees\Registry;
+
+?>
+
+<div class="row wt-header-content navbar d-md-none" id="mobileMenu">
+    <nav class="wt-primary-navigation collapse navbar-collapse" id="primaryMenuM">
+        <?php if ($tree !== null) : ?>
+            <div class="col wt-header-search mb-2">
+                <?= view(Registry::container()->get(ModuleThemeInterface::class)->name() . '::layouts/body/header-search-form', ['tree' => $tree]); ?>
+            </div>
+            <ul class=" nav wt-genealogy-menu">
+            <?php foreach (Registry::container()->get(ModuleThemeInterface::class)->genealogyMenu($tree) as $menu) : ?>
+            <?= view('components/menu-item', ['menu' => $menu]) ?>
+            <?php endforeach ?>
+            </ul>
+        <?php endif ?>
+    </nav>
+    <nav class="wt-secondary-navigation collapse navbar-collapse" id="secondaryMenuM">
+        <ul class="nav wt-genealogy-menu wt-user-menu-sm">
+            <?php foreach (Registry::container()->get(ModuleThemeInterface::class)->userMenu($tree) as $menu) : ?>
+            <?= view('components/menu-item', ['menu' => $menu]) ?>
+            <?php endforeach ?>
+        </ul>
+    </nav>
+</div>
